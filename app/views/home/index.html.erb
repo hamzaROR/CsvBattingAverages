@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<div class="container">
+	<h2>Batting Averages</h2>
+	<hr>
+	<%= form_tag home_upload_csv_path, :multipart => true do %>
+	  <%= file_field_tag :my_file %>
+	  <%= submit_tag 'Upload' %>
+	<% end %>	
+	<hr>
+	<% if @check.present? %>
+
+		<%= form_tag( '/', :method => :get ) do %>
+		<b>Year</b> <%= select_tag "year", options_for_select(@years, selected: params[:year]), {:prompt => 'Select Year'} %>
+		<b>Team Name</b> <%= select_tag "team_name", options_for_select(@team_names, selected: params[:team_name]), {:prompt => 'Select Team'} %>
+		<%= submit_tag 'Search' %>
+		<% end %>
+		<hr>
+		<table class="table">
+			<thead>
+			  <tr>
+			    <th>playerID</th>
+			    <th>yearId</th>
+			    <th>Team name(s)</th>
+			    <th>Batting Average</th>
+			  </tr>
+			</thead>
+			<tbody>
+			<% @players_details.each do |r| %>
+			  <tr>
+			    <td><%= r.last[:id] %></td>
+			    <td><%= r.last[:year] %></td>
+			    <td><%= r.last[:teams] %></td>
+			    <td><%= r.last[:average] %></td>
+			  </tr>
+			<%end%>
+			</tbody>
+		</table>	
+	<% end %>
+</div>
+
+
+
+
+
+
+
